@@ -11,11 +11,23 @@ class Main(object):
 
     def run_app(self):
         self.print_usage()
-        with indent(4):
-            puts('Menu')
+
+        while True:
             with indent(4):
-                puts('1. Add new Event to calender')
-                puts('2. List Events by date')
+                puts('Menu')
+                with indent(4):
+                    puts('1. Add new Event to calender')
+                    puts('2. List Events by date')
+                    puts('3. Exit')
+                    puts("\n")
+
+                    
+
+                    while True:
+                        i = raw_input("select action: ")
+                        if i in [1, 2]:
+                            break;
+
 
     def print_event_item(self, event):
         with indent(4):
