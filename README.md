@@ -1,6 +1,7 @@
 # CALENDAR APP
 
-This is a simple command line calendar APP, that simply allow's a user to add events by keying in the following;
+This is a simple command line API, that allow's a user to add events by keying in the following;
+    
     - Event Date
     - Event Name
     - Event Description
