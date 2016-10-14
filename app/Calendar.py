@@ -22,14 +22,18 @@ class Calendar:
         else:
             self.calendar[event_date] = [event]
 
-        print self.calendar
-
     def search_event(self, event_date):
         """
 
         """
-
-        if event_date in self.__calendar.keys():
-            return self.__calendar[event_date]
+        
+        if event_date in self.calendar.keys():
+            return self.calendar[event_date]
         else:
             return None
+
+    def get_last_item(self):
+        latest_date = sorted(self.calendar.keys()).pop()
+
+        return self.calendar[latest_date].pop()
+
