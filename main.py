@@ -12,11 +12,8 @@ class Main(object):
         self.calender = Calendar()
 
     def print_usage(self):
-        OKGREEN = '\033[92m'
-        print OKGREEN
         f = Figlet(font='slant')
         puts(f.renderText('Calender App'))
-        print(Style.RESET_ALL)
 
     def print_event_item(self, event):
         with indent(8):
