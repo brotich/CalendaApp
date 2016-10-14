@@ -28,7 +28,7 @@ class Calendar:
         """
 
         """
-        
+
         if event_date in self.__calendar.keys():
             return self.__calendar[event_date]
         else:
