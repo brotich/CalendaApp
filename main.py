@@ -4,7 +4,8 @@ from pyfiglet import Figlet
 from models.event import Event
 import datetime
 import sys
-import calendar
+from util.util import bcolors
+
 
 class Main(object):
 
@@ -12,14 +13,16 @@ class Main(object):
         self.calender = Calendar()
 
     def print_usage(self):
+        puts(bcolors.OKGREEN)
         f = Figlet(font='slant')
         puts(f.renderText('Calender App'))
+        puts(bcolors.ENDC)
 
     def print_event_item(self, event):
         with indent(8):
             puts(event.event_name)
             with indent(4):
-                puts("=> " +event.event_description)
+                puts("=> " + event.event_description)
             puts("-" * 60)
 
     def print_day_events(self, events):
@@ -32,16 +35,23 @@ class Main(object):
     def parse_date(self):
         event_date = None
         while True:
-            event_date = raw_input("Date [YYYY-MM-DD]: ")
+            puts(bcolors.BOLD)
+            event_date = raw_input("Date [YYYY-MM-DD]: ").strip()
             if event_date == "":
+                puts(bcolors.UNDERLINE + bcolors.WARNING +
+                     "The Date is empty" +
+                     bcolors.ENDC)
                 continue
-
             try:
                 datetime.datetime.strptime(event_date, '%Y-%m-%d')
                 break
             except ValueError:
-                print ("Incorrect data format, should be YYYY-MM-DD")
+                puts(bcolors.UNDERLINE + bcolors.WARNING +
+                     "Incorrect date format, should be YYYY-MM-DD" +
+                     bcolors.ENDC)
                 continue
+        puts(bcolors.ENDC)
+
         return event_date
 
     def create_event(self):
@@ -69,13 +79,15 @@ class Main(object):
 
         return event
 
-
     def run_app(self):
         self.print_usage()
 
         while True:
             with indent(4):
-                puts('Menu')
+                puts(bcolors.BOLD)
+                puts("MENU")
+                puts(bcolors.ENDC)
+
                 with indent(4):
                     puts('1. Add new Event to calender')
                     puts('2. List Events by date')
@@ -87,11 +99,17 @@ class Main(object):
 
                     while True:
                         try:
-                            action = int(raw_input("select action: "))
+                            puts(bcolors.BOLD)
+                            action = raw_input("select action to continue: ")
+                            action = int(action.strip())
+                            puts(bcolors.ENDC)
                             if action in [1, 2, 3, 4]:
                                 break
                         except ValueError:
-                            print "Error: Invalid Menu item"
+                            print (bcolors.UNDERLINE + bcolors.WARNING +
+                                   "Error: Invalid Menu item" +
+                                   bcolors.ENDC)
+
                     puts("=" * 80)
                     if action == 1:
                         event = self.create_event()
@@ -99,22 +117,22 @@ class Main(object):
                     elif action == 2:
                             date = self.parse_date()
                             data = self.calender.search_event(date)
-                            if not data is None:
+                            if data is not None:
                                 self.print_day_events(data)
                             else:
                                 with indent(4):
-                                    puts("Date: " + events[0].event_date)
+                                    puts("Date: " + date)
                                     puts("No items scheduled for Date")
                     elif action == 3:
                             latest_event = self.calender.get_last_item()
                             self.print_day_events([latest_event])
                     elif action == 4:
                         with indent(4):
-                            puts('Good Bye')   
+                            puts('Good Bye')
                             sys.exit(0)
 
+                    print ("=" * 80)
 
 
-        
-d = Main()
-d.run_app()
+main = Main()
+main.run_app()
