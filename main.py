@@ -2,8 +2,39 @@ from clint.textui import puts, indent
 from app.Calendar import Calendar
 from pyfiglet import Figlet
 from models.event import Event
+import datetime
 
 class Main(object):
+
+    def create_event(self):
+        event_date = None
+        while True:
+            event_date = raw_input("Please Enter the Date the Event YYYY-MM-DD: ")
+            if event_date == "":
+                continue
+
+            try:
+                datetime.datetime.strptime(event_date, '%Y-%m-%d')
+                break
+            except ValueError:
+                print ("Incorrect data format, should be YYYY-MM-DD")
+                continue
+
+        event_name = None
+        while True:
+            event_name = raw_input("Enter the Name of the Event:")
+            if event_name == "":
+                continue
+            else:
+                break
+
+        event_description = None
+        while True:
+            event_description = raw_input("Please Describe the event: ")
+            if event_description == "":
+                continue
+            else:
+                break
 
     def print_usage(self):
         f = Figlet(font='slant')
